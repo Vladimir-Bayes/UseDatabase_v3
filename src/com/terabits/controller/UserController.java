@@ -50,7 +50,6 @@ public class UserController {
 //			JSONArray jsonArray = JSONArray.fromObject(rechargeVos);
 //			response.getWriter().println(jsonArray);
 
-
 			UserQueryTest userQueryTest = new UserQueryTest();
 			userQueryTest.user_recharge_test(rechargeVos);
 //			System.out.println(phoneAndTimeBo.getBeginTime()+"  "+phoneAndTimeBo.getEndTime()+"  "+phoneAndTimeBo.getPhone());
