@@ -2,39 +2,50 @@ package com.terabits.mapper;
 
 import java.util.List;
 
-import com.terabits.meta.bo.PhoneAndTimeBo;
-import com.terabits.meta.bo.PhonePaymentAndRemarkBo;
-import com.terabits.meta.po.UserConsumptionPo;
-import com.terabits.meta.po.UserRechargePo;
+import org.apache.ibatis.annotations.Param;
+import com.terabits.meta.vo.ConsumptionVo;
+import com.terabits.meta.vo.RechargeVo;
 
 public interface UserMapper {
 	
 	/**
-	 * @param phoneAndTimeBo
+	 * @param beginTime
+	 * @param endTime
+	 * @param phone
 	 * @return
 	 * @throws Exception
 	 */
-	public List<UserRechargePo> selectRecharge(PhoneAndTimeBo phoneAndTimeBo) throws Exception;
+	public List<RechargeVo> selectRecharge(@Param("beginTime") String beginTime, @Param("endTime") String endTime, @Param("phone") String phone) throws Exception;
 	
 	/**
-	 * @param phoneAndTimeBo
+	 * @param beginTime
+	 * @param endTime
+	 * @param phone
 	 * @return
 	 * @throws Exception
 	 */
-	public List<UserConsumptionPo> selectConsumption(PhoneAndTimeBo phoneAndTimeBo) throws Exception;
+	public List<ConsumptionVo> selectConsumption(@Param("beginTime") String beginTime, @Param("endTime") String endTime, @Param("phone") String phone) throws Exception;
 	
 	/**
-	 * @param phonePaymentAndRemarkBo
+	 * @param deviceid
 	 * @return
 	 * @throws Exception
 	 */
-	public int insertPayment(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo) throws Exception;
+	public long selectSiteIdByDeviceId(@Param("deviceid") String deviceid) throws Exception;
 	
 	/**
-	 * @param phonePaymentAndRemarkBo
+	 * @param siteid
 	 * @return
 	 * @throws Exception
 	 */
-	public int undateBalance(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo) throws Exception;
+	public String selectMarkBySiteId(@Param("siteid") long siteid) throws Exception;
+	
+	/**
+	 * @param phone
+	 * @param paymeny
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertPayment(@Param("phone") String phone, int paymeny) throws Exception;
 
 }

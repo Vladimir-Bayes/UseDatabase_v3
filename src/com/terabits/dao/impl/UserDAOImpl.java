@@ -8,21 +8,19 @@ import org.springframework.stereotype.Repository;
 
 import com.terabits.dao.UserDAO;
 import com.terabits.mapper.UserMapper;
-import com.terabits.meta.bo.PhoneAndTimeBo;
-import com.terabits.meta.bo.PhonePaymentAndRemarkBo;
-import com.terabits.meta.po.UserConsumptionPo;
-import com.terabits.meta.po.UserRechargePo;
+import com.terabits.meta.vo.ConsumptionVo;
+import com.terabits.meta.vo.RechargeVo;
 import com.terabits.utils.DBTools;
 
 @Repository("userDAO")
 public class UserDAOImpl implements UserDAO{
 	
-	public List<UserRechargePo> selectRecharge(PhoneAndTimeBo phoneAndTimeBo) throws Exception {
+	public List<RechargeVo> selectRecharge(String beginTime, String endTime, String phone) throws Exception {
 		SqlSession session = DBTools.getSession();
 		UserMapper mapper = session.getMapper(UserMapper.class);
-		List<UserRechargePo> userRechargePos = new ArrayList<UserRechargePo>();
+		List<RechargeVo> rechargeVos = new ArrayList<RechargeVo>();
 		try {
-			userRechargePos = mapper.selectRecharge(phoneAndTimeBo);
+			rechargeVos = mapper.selectRecharge(beginTime, endTime, phone);
 			session.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -31,16 +29,16 @@ public class UserDAOImpl implements UserDAO{
 		} finally {
 			session.close();
 		}
-		return userRechargePos;
+		return rechargeVos;
 	}	
 	
-	public List<UserConsumptionPo> selectConsumption(PhoneAndTimeBo phoneAndTimeBo) throws Exception {
+	public List<ConsumptionVo> selectConsumption(String beginTime, String endTime, String phone) throws Exception {
 		SqlSession session = DBTools.getSession();
 		UserMapper mapper = session.getMapper(UserMapper.class);
-		List<UserConsumptionPo> userConsumptionPos = new ArrayList<UserConsumptionPo>();
+		List<ConsumptionVo> consumptionVos = new ArrayList<ConsumptionVo>();
 		try {
-			userConsumptionPos = mapper.selectConsumption(phoneAndTimeBo);
-			session.commit();
+			consumptionVos = mapper.selectConsumption(beginTime, endTime, phone);
+			session.commit();						
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -48,31 +46,48 @@ public class UserDAOImpl implements UserDAO{
 		} finally {
 			session.close();
 		}
-		return userConsumptionPos;
-	}
-		
-	public int insertPayment(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo) throws Exception {
-		SqlSession session = DBTools.getSession();
-		UserMapper mapper = session.getMapper(UserMapper.class);
-		try {
-			mapper.insertPayment(phonePaymentAndRemarkBo);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-			return 0;
-		} finally {
-			session.close();
-		}
-		return 1;
+		return consumptionVos;
 	}
 	
-	public int undateBalance(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo) throws Exception {
+	public long selectSiteIdByDeviceId(String deviceid) throws Exception {
+		SqlSession session = DBTools.getSession();
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		long siteid=0;
+		try {
+			siteid = mapper.selectSiteIdByDeviceId(deviceid);
+			session.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return siteid;
+	}
+	
+	public String selectMarkBySiteId(long siteid) throws Exception {
+		SqlSession session = DBTools.getSession();
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		String mark="";
+		try {
+			mark = mapper.selectMarkBySiteId(siteid);
+			session.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return mark;
+	}
+		
+	public int insertPayment(String phone, int paymeny) throws Exception {
 		SqlSession session = DBTools.getSession();
 		UserMapper mapper = session.getMapper(UserMapper.class);
 		try {
-			mapper.undateBalance(phonePaymentAndRemarkBo);
+			mapper.insertPayment(phone, paymeny);
 			session.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -84,6 +99,4 @@ public class UserDAOImpl implements UserDAO{
 		}
 		return 1;
 	}
-
-
 }

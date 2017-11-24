@@ -1,25 +1,28 @@
 package com.terabits.meta.vo;
 
 public class RechargeVo {
-	private String createTime;
+	private String time;
 	private String phone;
-	private Double payment;
-	public String getCreateTime() {
-		return createTime;
+	private int money;
+	
+	
+	public String getTime() {
+		return this.time;
 	}
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
+	public void setTime(String time) {
+		this.time = time;
 	}
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public Double getPayment() {
-		return payment;
+	public int getMoney() {
+		return this.money;
 	}
-	public void setPayment(Double payment) {
-		this.payment = payment;
-	}	
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	
 }

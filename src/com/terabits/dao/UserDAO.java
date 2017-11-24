@@ -2,38 +2,20 @@ package com.terabits.dao;
 
 import java.util.List;
 
-import com.terabits.meta.bo.PhoneAndTimeBo;
-import com.terabits.meta.bo.PhonePaymentAndRemarkBo;
-import com.terabits.meta.po.UserConsumptionPo;
-import com.terabits.meta.po.UserRechargePo;
+
+import com.terabits.meta.vo.ConsumptionVo;
+import com.terabits.meta.vo.RechargeVo;
 
 public interface UserDAO {
-	/**
-	 * @param phoneAndTimeBo
-	 * @return
-	 * @throws Exception
-	 */
-	public List<UserRechargePo> selectRecharge(PhoneAndTimeBo phoneAndTimeBo) throws Exception;
+
+	public List<RechargeVo> selectRecharge(String beginTime, String endTime, String phone) throws Exception;
+
+	public List<ConsumptionVo> selectConsumption(String beginTime, String endTime, String phone) throws Exception;
 	
-	/**
-	 * @param phoneAndTimeBo
-	 * @return
-	 * @throws Exception
-	 */
-	public List<UserConsumptionPo> selectConsumption(PhoneAndTimeBo phoneAndTimeBo) throws Exception;
+	public long selectSiteIdByDeviceId(String deviceid) throws Exception;
 	
-	/**
-	 * @param phonePaymentAndRemarkBo
-	 * @return
-	 * @throws Exception
-	 */
-	public int insertPayment(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo) throws Exception;
+	public String selectMarkBySiteId(long siteid) throws Exception;
 	
-	/**
-	 * @param phonePaymentAndRemarkBo
-	 * @return
-	 * @throws Exception
-	 */
-	public int undateBalance(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo) throws Exception;
+	public int insertPayment(String phone, int paymeny) throws Exception;
 
 }

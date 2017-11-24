@@ -4,23 +4,18 @@
 
 <!-- 自定义返回结果集 -->
 
-<resultMap type="com.terabits.meta.po.UserRechargePo" id="rechargemap">
-<id property="Id" column="ID" javaType="java.lang.Integer"/>
-<result property="name" column="Name" javaType="java.lang.String"></result>
-<result property="tel" column="Tel" javaType="java.lang.String"></result>
-<result property="createTime" column="CreateTime" javaType="java.lang.String"></result>
-<result property="payment" column="Payment" javaType="java.lang.Double"></result>
-<result property="remark" column="Remark" javaType="java.lang.String"></result>
+<resultMap type="com.terabits.meta.vo.RechargeVo" id="rechargemap">
+<result property="time" column="gmtcreate" javaType="java.lang.String"></result>
+<result property="phone" column="phone" javaType="java.lang.String"></result>
+<result property="money" column="payment" javaType="java.lang.Integer"></result>
 </resultMap>
 
-<resultMap type="com.terabits.meta.po.UserConsumptionPo" id="consumptionmap">
-<id property="Id" column="ID" javaType="java.lang.Integer"/>
-<result property="name" column="Name" javaType="java.lang.String"></result>
-<result property="tel" column="Tel" javaType="java.lang.String"></result>
-<result property="createTime" column="CreateTime" javaType="java.lang.String"></result>
-<result property="consumption" column="Consumption" javaType="java.lang.Double"></result>
-<result property="imei" column="IMEI" javaType="java.lang.String"/>
-<result property="mark" column="Mark" javaType="java.lang.String"/>
+<resultMap type="com.terabits.meta.vo.ConsumptionVo" id="consumptionmap">
+<result property="phone" column="phone" javaType="java.lang.String"></result>
+<result property="station" column="deviceid" javaType="java.lang.String"></result>
+<result property="boxId" column="deviceid" javaType="java.lang.String"></result>
+<result property="time" column="gmtcreate" javaType="java.lang.String"></result>
+<result property="money" column="payment" javaType="java.lang.Integer"></result>
 </resultMap>
 
 <!-- 在各种标签中的id属性必须和接口中的方法名相同 ， id属性值必须是唯一的，不能够重复使用。parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型-->
@@ -30,20 +25,34 @@
 <!--#{}中的内容，为占位符，当参数为某个JavaBean时，表示放置该Bean对象的属性值  -->
 
 
-<select id="selectRecharge" parameterType="com.terabits.meta.bo.PhoneAndTimeBo" resultMap="rechargemap">
-	select * from test3 where CreateTime >= #{beginTime} and CreateTime &lt; #{endTime} and Tel = #{phone} order by CreateTime asc
+<select id="selectRecharge" resultMap="rechargemap">
+	select * 
+	from t_charge_rechargerecord 
+	where gmtcreate >= #{beginTime} and gmtcreate &lt; #{endTime} and phone = #{phone} 
+	order by gmtcreate desc
 </select>
 
-<select id="selectConsumption" parameterType="com.terabits.meta.bo.PhoneAndTimeBo" resultMap="consumptionmap">
-	select * from test4 where CreateTime >= #{beginTime} and CreateTime &lt; #{endTime} and Tel = #{phone} order by CreateTime desc
+<select id="selectConsumption" resultMap="consumptionmap">
+	select * 
+	from t_charge_consumerecord
+	where gmtcreate >= #{beginTime} and gmtcreate &lt; #{endTime} and phone = #{phone} 
+	order by gmtcreate desc
+</select>
+
+<select id="selectSiteIdByDeviceId" resultType="Long">
+	select siteid
+	from t_charge_device
+	where deviceid =#{deviceid}
+</select>
+
+<select id="selectMarkBySiteId" resultType="String">
+	select mark
+	from t_charge_site
+	where gid = #{siteid}
 </select>
 	
-<insert id="insertPayment" useGeneratedKeys="true" parameterType="com.terabits.meta.bo.PhonePaymentAndRemarkBo">
-	insert into test3 (Tel, CreateTime, Payment, Remark) values (#{phone}, now(), #{payment}, #{remark})
-</insert>
-
-<insert id="undateBalance" parameterType="com.terabits.meta.bo.PhonePaymentAndRemarkBo">
-	update test5 set Balance = #{payment}+(select Balance where Tel = #{phone}) where Tel = #{phone}; 
+<insert id="insertPayment" useGeneratedKeys="true" >
+	insert into t_charge_rechargerecord (phone, gmtcreate, payment) values (#{phone}, now(), #{payment})
 </insert>
 
 </mapper>

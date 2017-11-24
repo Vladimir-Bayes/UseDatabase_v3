@@ -2,31 +2,40 @@ package com.terabits.meta.vo;
 
 public class ConsumptionVo {
 	private String phone;
-	private String createTime;
-	private String mark;
-	private Double consumption;
+	private String station;
+	private String boxId;
+	private String time;
+	private int money;
+	
+	
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getCreateTime() {
-		return createTime;
+	public String getStation() {
+		return this.station;
 	}
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
+	public void setStation(String station) {
+		this.station = station;
 	}
-	public String getMark() {
-		return mark;
+	public String getBoxId() {
+		return this.boxId;
 	}
-	public void setMark(String mark) {
-		this.mark = mark;
+	public void setBoxId(String boxId) {
+		this.boxId = boxId;
 	}
-	public Double getConsumption() {
-		return consumption;
+	public String getTime() {
+		return this.time;
 	}
-	public void setConsumption(Double consumption) {
-		this.consumption = consumption;
-	}	
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public int getMoney() {
+		return this.money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
 }

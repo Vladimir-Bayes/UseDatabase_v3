@@ -1,20 +1,13 @@
 package com.terabits.service;
 
-import java.util.List;
-
-import com.terabits.meta.bo.PhoneAndTimeBo;
-import com.terabits.meta.bo.PhonePaymentAndRemarkBo;
-import com.terabits.meta.vo.ConsumptionVo;
-import com.terabits.meta.vo.RechargeVo;
+import net.sf.json.JSONArray;
 
 public interface UserService {
 	
-	public List<RechargeVo> getRecharges(PhoneAndTimeBo phoneAndTimeBo);
+	public JSONArray getRecharges(String beginTime, String endTime, String phone);
+
+	public JSONArray getConsumptions(String beginTime, String endTime, String phone);
 	
-	public List<ConsumptionVo> getConssumptions(PhoneAndTimeBo phoneAndTimeBo);
-	
-	public int getInsert(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo);
-	
-	public int getUpdate(PhonePaymentAndRemarkBo phonePaymentAndRemarkBo);
+	public int insertPayment(String phone, int paymeny, String comments, String adminname);
 
 }
