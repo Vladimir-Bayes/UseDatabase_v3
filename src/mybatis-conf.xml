@@ -9,9 +9,9 @@
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://112.124.6.31:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"/>
-                <property name="username" value="Zhipeng" />
-                <property name="password" value="123321" />
+                <property name="url" value="jdbc:mysql://IP:port/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"/>
+                <property name="username" value="user" />
+                <property name="password" value="password" />
                 <!-- 在任意时间存在的活动（也就是正在使用）连接的数量 -->
                 <property name="poolMaximumActiveConnections" value="20"/>
                 <!-- 任意时间存在的空闲连接数 -->
